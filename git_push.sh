@@ -12,7 +12,8 @@ git add .
 git commit -m "$COMMIT_MSG"
 git pull --rebase origin main
 
-# Push con token expandido
-git push "https://${GITHUB_TOKEN}@github.com/jmhernandezabril/T7AIChatModular.git" main
+# 🔐 Aquí está la clave: usamos el token expandido directamente en la URL
+GIT_URL="https://${GITHUB_TOKEN}@github.com/jmhernandezabril/T7AIChatModular.git"
+git push "$GIT_URL" main
 
 echo "[$(date)] Commit: $COMMIT_MSG" >> logs/git_push.log
