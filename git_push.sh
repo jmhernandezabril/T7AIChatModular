@@ -12,8 +12,9 @@ git add .
 git commit -m "$COMMIT_MSG"
 git pull --rebase origin main
 
-# Creamos una URL segura con el token usando envsubst
-GIT_URL=$(echo "https://\$GITHUB_TOKEN@github.com/jmhernandezabril/T7AIChatModular.git" | envsubst)
+# Creamos una URL segura con el token 
+GIT_URL="https://${GITHUB_TOKEN}@github.com/jmhernandezabril/T7AIChatModular.git"
+
 
 git push "$GIT_URL" main
 
