@@ -1,29 +1,40 @@
 #!/bin/bash
 
-# 1. Toma el mensaje como argumento
+# 1. Cargar variables de entorno
+source .env
+
+# 2. Leer mensaje de commit
 MENSAJE="$1"
 
-# 2. Verifica que haya mensaje
+# 3. Verificar que haya mensaje
 if [ -z "$MENSAJE" ]; then
-  echo "⚠️  Especifica un mensaje de commit. Ejemplo: ./subiragit.sh \"mensaje de commit\""
+  echo "⚠️  Especifica un mensaje. Ejemplo: ./subiragit.sh \"mensaje bonito\""
   exit 1
 fi
 
-# 3. Detecta automáticamente la rama activa
+# 4. Detectar rama actual
 RAMA=$(git branch --show-current)
 
-# 4. Añade todos los cambios
+# 5. Mostrar mensaje de inicio
+echo "🟢 Guardando cambios en rama '$RAMA'..."
+
+# 6. Añadir todos los cambios
 git add .
 
-# 5. Hace el commit
+# 7. Crear commit
 git commit -m "$MENSAJE"
 
-# 6. Push a la rama detectada
-git push origin "$RAMA"
+# 8. Sincronizar primero para evitar conflictos
+git pull --rebase origin "$RAMA"
 
-# 7. Guarda el mensaje en un log
+# 9. Hacer push usando token
+git push https://${GITHUB_TOKEN}@github.com/jmhernandezabril/T7AIChatModular.git "$RAMA"
+
+# 10. Crear carpeta de logs si no existe
 mkdir -p logs
-echo "$(date '+%Y-%m-%d %H:%M:%S') - Rama: $RAMA - Mensaje: $MENSAJE" >> logs/git_push.log
 
-# 8. Mensaje de confirmación
-echo "✅ Cambios subidos a rama '$RAMA' con mensaje: '$MENSAJE'"
+# 11. Guardar en logs
+echo "$(date '+%Y-%m-%d %H:%M:%S') - $MENSAJE" >> logs/git_push.log
+
+# 12. Mensaje de confirmación
+echo "✅ Cambios subidos correctamente a '$RAMA' con el mensaje: '$MENSAJE'"
