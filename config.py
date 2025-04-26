@@ -1,7 +1,7 @@
 # config.py
 
 # Apariencia general
-FONT_FAMILY = "Arial"
+FONT_FAMILY = "Roboto"
 FONT_SIZE = "14px"
 APP_NAME = "MINIcrm"
 
