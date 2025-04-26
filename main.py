@@ -9,6 +9,7 @@ def register_routes(app):
             "base.html",
             app_name=config.APP_NAME,
             ai_model=config.AI_MODEL,
+            ai_provider=config.AI_PROVIDER,
             font_family=config.FONT_FAMILY,
             saludo_inicial=config.SALUDO_INICIAL
         )
