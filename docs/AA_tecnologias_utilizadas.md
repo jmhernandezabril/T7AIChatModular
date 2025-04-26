@@ -22,8 +22,11 @@ Este proyecto combina diferentes tecnologías modernas para construir un copilot
 | Área | Tecnología | Fabricante / Comunidad |
 |:-----|:-----------|:------------------------|
 | Motor de IA principal | OpenAI (gpt-3.5-turbo) | OpenAI |
-| Memoria semántica (futuro) | FAISS | Meta AI |
+| Memoria semántica con recuperación por similitud | FAISS + Embeddings OpenAI | Meta AI + OpenAI |
 | Clasificación avanzada de intenciones (opcional) | HuggingFace Transformers | HuggingFace Community |
+
+**🔍 FAISS (Facebook AI Similarity Search)** permite a T7AIChatModular buscar información relevante en tiempo real basándose en el contenido conversacional previo o documentos embebidos.  
+El sistema ya incorpora un índice vectorial activo que se puede alimentar, consultar y actualizar dinámicamente desde el módulo `vector_memory/`.
 
 ---
 
@@ -45,10 +48,12 @@ Este proyecto combina diferentes tecnologías modernas para construir un copilot
 | Documentación técnica | Markdown (`.md`) |
 | Organización modular | Carpeta `/docs/` |
 | Control de configuraciones | `config.py` centralizado |
+| Seguimiento de pushes | `logs/git_push.log` automático |
 
 ---
 
 # 🎯 Visión Final
-T7AIChatModular combina inteligencia artificial, orquestación modular de flujos y visualización interactiva para construir un asistente conversacional vivo, adaptable y preparado para evolucionar.
+
+T7AIChatModular combina inteligencia artificial, memoria vectorial, orquestación modular de flujos y visualización interactiva para construir un asistente conversacional vivo, adaptable y preparado para evolucionar.
 
 ---
