@@ -1,21 +1,28 @@
 #!/bin/bash
 
-# Cargar el token desde .env
+# Cargar variables del entorno
 source .env
 
-# Mensaje del commit
-mensaje=$1
+# Mensaje del commit como argumento
+mensaje="$1"
 
-# Verifica si el remote ya contiene el token
-expected_url="https://${GITHUB_TOKEN}@github.com/jmhernandezabril/T7AIChatModular.git"
-current_url=$(git remote get-url origin)
+# Ruta del log
+LOG_FILE="logs/git_push.log"
 
-if [[ "$current_url" != "$expected_url" ]]; then
-  echo "🔧 Actualizando remote origin con token..."
-  git remote set-url origin "$expected_url"
-fi
+# Fecha actual
+fecha=$(date "+%Y-%m-%d %H:%M:%S")
 
-echo "💾 Guardando cambios..."
+# Mostrar mensaje
+echo "🟢 Guardando cambios..."
+
+# Añadir todos los cambios
 git add .
+
+# Hacer el commit
 git commit -m "$mensaje"
-git push origin main
+
+# Hacer push con token desde variable de entorno
+git push https://$GITHUB_TOKEN@github.com/jmhernandezabril/T7AIChatModular.git main
+
+# Guardar en log
+echo "[$fecha] $mensaje" >> $LOG_FILE
