@@ -1,0 +1,74 @@
+* {
+    font-family: inherit;
+}
+
+body {
+    margin: 0;
+    background-color: white;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: white;
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.logo {
+    font-weight: bold;
+    font-size: 1.5em;
+}
+
+.model-name {
+    font-size: 0.7em;
+    color: #555;
+    margin-top: 4px;
+    position: relative;
+    top: 2px; /* También puedes usar top para bajarlo ligeramente */
+}
+
+.header-right {
+    font-size: 1em;
+    color: #555;
+}
+
+.app-name {
+    padding: 5px 10px;
+    border: 1px solid #ccc;
+    border-radius: 12px;
+    background-color: #f9f9f9;
+}
+
+.main {
+    padding: 20px;
+}
+
+.saludo {
+    margin-bottom: 15px;
+    font-size: 1.2em;
+}
+
+.chat-input {
+    width: 100%;
+    min-height: 100px;
+    max-height: 300px;
+    padding: 10px;
+    font-size: 1em;
+    resize: none;
+    overflow-y: auto;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-sizing: border-box;
+}
+
+.chat-input:focus {
+    outline: none;
+    border-color: #666;
+}

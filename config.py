@@ -1,8 +1,10 @@
 # config.py
 
 # Apariencia general
-FONT_FAMILY = "Roboto"
+FONT_FAMILY = "Poppins"
+FONT_URL = "https://fonts.googleapis.com/css2?family=Poppins&display=swap"
 FONT_SIZE = "14px"
+
 APP_NAME = "MINIcrm"
 
 # Configuración de AI
