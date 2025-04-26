@@ -1,39 +1,50 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ app_name }}</title>
-    <link rel="stylesheet" href="/static/css/base.css">
-
-    {% if font_url %}
-    <link href="{{ font_url }}" rel="stylesheet">
-    {% endif %}
-
-    <style>
-        body {
-            font-family: '{{ font_family }}', sans-serif;
-            margin: 0;
-            background-color: white;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ app_name }}</title>
+  <link rel="stylesheet" href="/static/css/base.css">
+  {% if font_url %}
+  <link href="{{ font_url }}" rel="stylesheet">
+  {% endif %}
+  <style>
+    body {
+      font-family: '{{ font_family }}', sans-serif;
+      margin: 0;
+      background-color: white;
+    }
+  </style>
 </head>
 <body>
-    <header class="header">
-        <div class="header-left">
-            <span class="logo">t7AI</span>
-            <span class="model-name" title="{{ ai_provider }}">{{ ai_model }}</span>
-        </div>
-        <div class="header-right">
-            <span class="app-name">{{ app_name }}</span>
-        </div>
-    </header>
+  <header class="header">
+    <div class="header-left">
+      <span class="logo">t7AI</span>
+      <span class="model-name" title="{{ ai_provider }}">{{ ai_model }}</span>
+    </div>
+    <div class="header-right">
+      <span class="app-name">{{ app_name }}</span>
+    </div>
+  </header>
 
-    <main class="main">
-        <div class="saludo">
-            <strong>{{ saludo_inicial }}</strong>
-        </div>
-        <textarea class="chat-input" placeholder="Escribe aqui..." rows="5"></textarea>
-    </main>
+  <main class="main">
+    <div class="saludo">
+      <strong>{{ saludo_inicial }}</strong>
+    </div>
+
+    <div class="chat-wrapper">
+      <div id="chat-container" class="chat-scroll">
+        <!-- Mensaje de bienvenida al arrancar -->
+        <div class="bot-message">👋 {{ saludo_inicial }}</div>
+      </div>
+
+      <div class="input-container">
+        <textarea id="chat-input" class="chat-input" placeholder="Escribe aquí..."></textarea>
+        <button id="send-button" class="send-button">➤</button>
+      </div>
+    </div>
+  </main>
+
+  <script src="/static/js/chat.js"></script>
 </body>
 </html>
