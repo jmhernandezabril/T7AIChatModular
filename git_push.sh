@@ -1,21 +1,21 @@
 #!/bin/bash
 
-COMMIT_MSG=$1
-if [ -z "$COMMIT_MSG" ]; then
-  echo "✍️ Escribe el mensaje del commit:"
-  read COMMIT_MSG
+# Cargar el token desde .env
+source .env
+
+# Mensaje del commit
+mensaje=$1
+
+# Verifica si el remote ya contiene el token
+expected_url="https://${GITHUB_TOKEN}@github.com/jmhernandezabril/T7AIChatModular.git"
+current_url=$(git remote get-url origin)
+
+if [[ "$current_url" != "$expected_url" ]]; then
+  echo "🔧 Actualizando remote origin con token..."
+  git remote set-url origin "$expected_url"
 fi
 
-echo "🔄 Guardando cambios..."
-
+echo "💾 Guardando cambios..."
 git add .
-git commit -m "$COMMIT_MSG"
-git pull --rebase origin main
-
-# Creamos una URL segura con el token 
-GIT_URL="https://${GITHUB_TOKEN}@github.com/jmhernandezabril/T7AIChatModular.git"
-
-
-git push "$GIT_URL" main
-
-echo "[$(date)] Commit: $COMMIT_MSG" >> logs/git_push.log
+git commit -m "$mensaje"
+git push origin main
