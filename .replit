@@ -1,20 +1,6 @@
-entrypoint = "app.py"
-modules = ["python-3.11"]
-
-[nix]
-channel = "stable-24_05"
-packages = ["global-platform-pro"]
-
-[unitTest]
-language = "python3"
-
-[gitHubImport]
-requiredFiles = [".replit", "replit.nix"]
-
-[deployment]
-run = ["python3", "app.py"]
-deploymentTarget = "cloudrun"
+# .replit
+run = "bash -lc './run.sh'"
 
 [[ports]]
-localPort = 5000
-externalPort = 80
+localPort = 30001
+externalPort = 3000
