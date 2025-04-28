@@ -4,15 +4,19 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{{ app_name }}</title>
-  <link rel="stylesheet" href="/static/css/base.css">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}">
   {% if font_url %}
-  <link href="{{ font_url }}" rel="stylesheet">
+    <link href="{{ font_url }}" rel="stylesheet">
   {% endif %}
   <style>
     body {
       font-family: '{{ font_family }}', sans-serif;
+      font-size: {{ font_size }};
       margin: 0;
-      background-color: white;
+      background-color: #fafafa;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
     }
   </style>
 </head>
@@ -28,23 +32,18 @@
   </header>
 
   <main class="main">
-    <div class="saludo">
-      <strong>{{ saludo_inicial }}</strong>
-    </div>
-
     <div class="chat-wrapper">
       <div id="chat-container" class="chat-scroll">
-        <!-- Mensaje de bienvenida al arrancar -->
         <div class="bot-message">👋 {{ saludo_inicial }}</div>
       </div>
 
       <div class="input-container">
-        <textarea id="chat-input" class="chat-input" placeholder="Escribe aquí..."></textarea>
+        <textarea id="chat-input" class="chat-input" placeholder="{{ saludo_inicial }}"></textarea>
         <button id="send-button" class="send-button">➤</button>
       </div>
     </div>
   </main>
 
-  <script src="/static/js/chat.js"></script>
+  <script src="{{ url_for('static', filename='js/chat.js') }}"></script>
 </body>
 </html>

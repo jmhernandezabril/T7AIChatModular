@@ -1,2 +1,8 @@
-
 flask
+sqlparse
+pandas
+plotly
+dash
+xlsxwriter
+dash-bootstrap-components
+routes

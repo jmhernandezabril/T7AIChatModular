@@ -78,7 +78,41 @@ Este documento describe el flujo completo del copiloto `T7AIChatModular`, desde 
 
 ---
 
-## 🔗 Resumen de Componentes IA en el Flujo
+# 🔗 Flujo Inteligente de Gestor de Base de Datos
+
+T7AIChatModular también gestiona la evolución de la estructura de la base de datos a través de lenguaje natural, de forma segura y controlada.
+
+## 1️⃣ Interpretación de Peticiones
+
+- Analiza si la petición implica:
+  - Crear una tabla
+  - Modificar estructura (añadir/modificar columnas)
+  - Eliminar estructura (solo administradores)
+
+## 2️⃣ Generación de SQL Seguro
+
+- Genera el comando SQL correspondiente:
+  - Usuarios normales: solo estructura (CREATE, ALTER)
+  - Administradores: permitido también DELETE, DROP, INSERT, UPDATE (con doble confirmación)
+
+## 3️⃣ Confirmación de Seguridad
+
+- Usuarios normales: 1 confirmación.
+- Administradores (`administrador_bd`): 2 confirmaciones para operaciones destructivas.
+
+## 4️⃣ Ejecución y Actualización
+
+- Ejecuta el comando en la base de datos.
+- Actualiza el documento `AZ_base_datos.md` con las nuevas tablas o campos.
+- Actualiza el índice FAISS para reflejar la nueva estructura en las búsquedas IA.
+
+## 5️⃣ Registro de Cambios
+
+- Toda operación queda registrada en el sistema de logs para auditoría y trazabilidad.
+
+---
+
+# 🔗 Resumen de Componentes IA en el Flujo
 
 | Tecnología | Rol en el Flujo | Comunidad |
 |------------|------------------|-----------|
@@ -91,5 +125,4 @@ Este documento describe el flujo completo del copiloto `T7AIChatModular`, desde 
 
 ---
 
-Este flujo modular permite escalar, personalizar e incorporar nuevas funciones en cualquier fase.
-
+Este flujo modular permite escalar, personalizar e incorporar nuevas funciones en cualquier fase, incluyendo la evolución automática de la base de datos de manera segura.

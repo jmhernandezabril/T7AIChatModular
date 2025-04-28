@@ -1,4 +1,4 @@
-/* base.css corregido para centrar el botón dentro del textarea sin que se salga */
+/* Centrar el boton dentro del textarea sin que se salga */
 
 * {
   font-family: inherit;
@@ -59,16 +59,11 @@ html, body {
   padding: 20px;
 }
 
-.saludo {
-  display: none;
-}
-
 .chat-wrapper {
   flex-grow: 1;
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  background-color: transparent;
 }
 
 .chat-scroll {
@@ -78,6 +73,7 @@ html, body {
   flex-direction: column;
   gap: 10px;
   scrollbar-width: thin;
+  padding: 0 10px;
 }
 
 .input-container {
@@ -93,7 +89,7 @@ html, body {
   font-size: 1em;
   min-height: 60px;
   max-height: 150px;
-  padding: 10px 50px 10px 10px; /* espacio a la derecha para el botón */
+  padding: 10px 50px 10px 10px; /* espacio a la derecha para el boton */
   border-radius: 8px;
   outline: none;
   overflow-y: auto;
@@ -103,7 +99,7 @@ html, body {
   position: absolute;
   right: 12px;
   top: 50%;
-  transform: translateY(-50%); /* CENTRAR el botón verticalmente SIEMPRE */
+  transform: translateY(-50%);
   background: none;
   border: none;
   font-size: 1.8em;
@@ -116,7 +112,8 @@ html, body {
   border-radius: 50%;
 }
 
-.user-message, .bot-message {
+.user-message,
+.bot-message {
   padding: 8px 12px;
   border-radius: 8px;
   word-break: break-word;
