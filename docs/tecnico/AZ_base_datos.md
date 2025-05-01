@@ -1228,3 +1228,26 @@ sql: |
   );
 ```
 
+```yaml
+table: clientes
+date: 2025-05-01
+time: 11:04:58.426
+user: t7AI
+action: DROP
+sql: |
+  DROP TABLE clientes
+```
+
+```yaml
+table: clientes
+date: 2025-05-01
+time: 11:05:05.336
+user: t7AI
+action: CREATE
+sql: |
+  CREATE TABLE IF NOT EXISTS clientes (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    nombre TEXT NOT NULL
+  );
+```
+

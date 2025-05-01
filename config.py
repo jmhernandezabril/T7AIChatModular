@@ -12,10 +12,7 @@ APP_NAME    = "ONEapp"
 AI_PROVIDER = "OpenAI"
 AI_MODEL = "gpt-3.5-turbo"
 # Añadimos la API Key (por defecto desde variable de entorno)
-OPENAI_API_KEY = os.getenv(
-    "OPENAI_API_KEY",
-    "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"
-)
+OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 
 # Mensaje inicial
 SALUDO_INICIAL = "Hola!"
