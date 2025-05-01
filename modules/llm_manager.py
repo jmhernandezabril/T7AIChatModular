@@ -8,14 +8,14 @@ from langchain_community.chat_models import ChatOpenAI
 llm = ChatOpenAI(
     openai_api_key=config.OPENAI_API_KEY,
     model_name=config.AI_MODEL,
-    temperature=0.0
+    temperature=config.AI_TEMPERATURE
 )
 
 create_table_prompt = PromptTemplate(
     input_variables=["user_input"],
     template="""
 Eres un asistente que convierte instrucciones en JSON.
-Recibe esta instrucción en lenguaje natural y devuelve exclusivamente un JSON válido sin ningún texto adicional.
+Recibe esta instrucción en lenguaje Cnatural y devuelve exclusivamente un JSON válido sin ningún texto adicional.
 
 La estructura del JSON debe ser exactamente:
 {{

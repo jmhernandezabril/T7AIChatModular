@@ -13,6 +13,7 @@ APP_NAME    = "ONEapp"
 # Configuración de AI
 AI_PROVIDER = "OpenAI"
 AI_MODEL = "gpt-3.5-turbo"
+AI_TEMPERATURE=0.0
 # Añadimos la API Key (por defecto desde variable de entorno)
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 
