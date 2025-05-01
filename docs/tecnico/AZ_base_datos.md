@@ -1066,3 +1066,165 @@ sql: |
   );
 ```
 
+```yaml
+table: clientes
+date: 2025-05-01
+time: 10:31:32.358
+user: t7AI
+action: DROP
+sql: |
+  DROP TABLE clientes
+```
+
+```yaml
+table: clientes
+date: 2025-05-01
+time: 10:31:46.717
+user: t7AI
+action: CREATE
+sql: |
+  CREATE TABLE IF NOT EXISTS clientes (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    nombre TEXT NOT NULL
+  );
+```
+
+```yaml
+table: clientes
+date: 2025-05-01
+time: 10:31:46.720
+user: t7AI
+action: CREATE
+sql: |
+  CREATE TABLE IF NOT EXISTS clientes (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    nombre TEXT NOT NULL
+  );
+```
+
+```yaml
+table: clientes
+date: 2025-05-01
+time: 10:32:16.217
+user: t7AI
+action: DROP
+sql: |
+  DROP TABLE clientes
+```
+
+```yaml
+table: prueba_manual
+date: 2025-05-01
+time: 10:33:31.151
+user: t7AI
+action: DROP
+sql: |
+  DROP TABLE prueba_manual
+```
+
+```yaml
+table: prueba_manual
+date: 2025-05-01
+time: 10:33:32.964
+user: t7AI
+action: CREATE
+sql: |
+  CREATE TABLE prueba_manual (
+    id INTEGER PRIMARY KEY,
+    nombre TEXT
+  )
+```
+
+```yaml
+table: clientes
+date: 2025-05-01
+time: 10:36:28.502
+user: t7AI
+action: CREATE
+sql: |
+  CREATE TABLE IF NOT EXISTS clientes (
+    nombre TEXT NOT NULL
+  );
+```
+
+```yaml
+table: clientes
+date: 2025-05-01
+time: 10:36:28.504
+user: t7AI
+action: CREATE
+sql: |
+  CREATE TABLE IF NOT EXISTS clientes (
+    nombre TEXT NOT NULL
+  );
+```
+
+```yaml
+table: clientes
+date: 2025-05-01
+time: 10:50:07.742
+user: t7AI
+action: DROP
+sql: |
+  DROP TABLE clientes
+```
+
+```yaml
+table: clientes
+date: 2025-05-01
+time: 10:50:20.611
+user: t7AI
+action: CREATE
+sql: |
+  CREATE TABLE IF NOT EXISTS clientes (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    nombre TEXT NOT NULL
+  );
+```
+
+```yaml
+table: clientes
+date: 2025-05-01
+time: 10:50:48.878
+user: t7AI
+action: DROP
+sql: |
+  DROP TABLE clientes
+```
+
+```yaml
+table: clientes
+date: 2025-05-01
+time: 10:51:05.888
+user: t7AI
+action: CREATE
+sql: |
+  CREATE TABLE IF NOT EXISTS clientes (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    nombre TEXT NOT NULL
+  );
+```
+
+```yaml
+table: clientes
+date: 2025-05-01
+time: 10:55:18.772
+user: t7AI
+action: DROP
+sql: |
+  DROP TABLE CLIENTES
+```
+
+```yaml
+table: clientes
+date: 2025-05-01
+time: 10:55:31.300
+user: t7AI
+action: CREATE
+sql: |
+  CREATE TABLE IF NOT EXISTS clientes (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    nombre TEXT NOT NULL
+  );
+```
+
