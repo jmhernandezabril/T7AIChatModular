@@ -3,8 +3,10 @@ from datetime import datetime
 import sqlparse
 from config import BASE_DATOS_DOC_PATH
 
+
 def documentar_sql(sql_texto, tipo="CREATE", usuario="t7AI"):
-    """Documenta cambios estructurales en la base de datos usando Frontmatter YAML."""
+    """Documenta cambios estructurales en la base de datos usando Frontmatter YAML,
+    evitando duplicar el contenido ya existente, y registrando tiempo con milisegundos."""
     # 1) Formatear y limpiar comentarios
     sql = sqlparse.format(
         sql_texto,
@@ -23,6 +25,7 @@ def documentar_sql(sql_texto, tipo="CREATE", usuario="t7AI"):
         pretty_body = ",\n  ".join(cols)
         sql = f"{head}(\n  {pretty_body}\n){tail}".strip()
 
+    # Solo documentamos DDL
     accion = sql.split()[0].upper()
     if accion not in ("CREATE", "ALTER", "DROP"):
         return
@@ -32,7 +35,7 @@ def documentar_sql(sql_texto, tipo="CREATE", usuario="t7AI"):
     if not nombre_tabla:
         return
 
-    # Asegurar existencia del directorio y archivo MD
+    # Asegurar existencia del MD
     os.makedirs(os.path.dirname(BASE_DATOS_DOC_PATH), exist_ok=True)
     if not os.path.exists(BASE_DATOS_DOC_PATH):
         with open(BASE_DATOS_DOC_PATH, "w", encoding="utf-8") as f:
@@ -42,33 +45,47 @@ def documentar_sql(sql_texto, tipo="CREATE", usuario="t7AI"):
     with open(BASE_DATOS_DOC_PATH, "r", encoding="utf-8") as f:
         contenido = f.read()
 
-    # Generar Frontmatter YAML
-    fecha = datetime.now().strftime("%Y-%m-%d")
-    hora  = datetime.now().strftime("%H:%M")
-    yaml_block = (
-        "```yaml\n"
-        f"table: {nombre_tabla}\n"
-        f"date: {fecha}\n"
-        f"time: {hora}\n"
-        f"user: {usuario}\n"
-        f"action: {accion}\n"
-        "sql: |\n"
-    )
-    for line in sql.splitlines():
-        yaml_block += f"  {line}\n"
-    yaml_block += "```\n\n"
+    # Generar bloque YAML
+    ahora = datetime.now()
+    fecha = ahora.strftime("%Y-%m-%d")
+    hora = ahora.strftime("%H:%M:%S.%f")[:-3]
 
-    # Anexar el bloque al final (solo cambios de esquema)
-    contenido += yaml_block
+    yaml_block = [
+        "```yaml",
+        f"table: {nombre_tabla}",
+        f"date: {fecha}",
+        f"time: {hora}",
+        f"user: {usuario}",
+        f"action: {accion}",
+        "sql: |"
+    ] + [f"  {line}" for line in sql.splitlines()] + ["```", ""]
 
-    # Guardar MD actualizado
-    with open(BASE_DATOS_DOC_PATH, "w", encoding="utf-8") as f:
-        f.write(contenido)
+    bloque_final = "\n".join(yaml_block)
+
+    # Evitar duplicados si el bloque lógico ya existe (sin campos dinámicos)
+    bloque_sin_dinamicos = "\n".join([
+        l for l in yaml_block
+        if not l.startswith(("date:", "time:", "user:")) and not l.startswith("```yaml")
+    ])
+
+    if bloque_sin_dinamicos.strip() in contenido:
+        return
+
+    # Anexar y guardar
+    with open(BASE_DATOS_DOC_PATH, "a", encoding="utf-8") as f:
+        f.write(bloque_final + "\n")
 
 
 def extraer_nombre_tabla(sql):
-    """Extrae el nombre de la tabla desde el SQL y limpia signos sobrantes."""
-    tokens = sql.replace("(", " ").split()
-    if len(tokens) < 3 or tokens[1].upper() != "TABLE":
-        return None
-    return tokens[2].strip("`; \n")
+    """Extrae el nombre de la tabla incluso con IF NOT EXISTS"""
+    tokens = sql.replace("(", " ").replace("\n", " ").split()
+    tokens = [t.strip().upper() for t in tokens]
+    if "TABLE" in tokens:
+        idx = tokens.index("TABLE")
+        try:
+            if tokens[idx + 1] == "IF":
+                return tokens[idx + 4].lower()
+            return tokens[idx + 1].lower()
+        except IndexError:
+            return None
+    return None

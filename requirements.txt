@@ -6,3 +6,8 @@ dash
 xlsxwriter
 dash-bootstrap-components
 routes
+langchain
+openai
+langchain-community
+langchain-core
+langchain-chains
