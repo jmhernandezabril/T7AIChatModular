@@ -1,0 +1,16 @@
+name: ejemplo_simple
+description: "Pipeline de prueba que devuelve un saludo y eco del parámetro."
+tools:
+  - name: greeter
+    type: llm_chain
+    params:
+      prompt_template: "Hola {{ nombre }}!"
+steps:
+  - name: saludo
+    tool: greeter
+    inputs:
+      nombre: "{{ nombre }}"
+    outputs:
+      - response
+
+# línea en blanco al final

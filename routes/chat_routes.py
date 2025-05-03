@@ -6,9 +6,12 @@ from flask import (
 )
 import pandas as pd
 from io import BytesIO
+import yaml
 
 from services.chat_service import ChatService  # asegúrate de que este path es correcto
 import config
+from orchestrator.schema import PipelineConfig  # NUEVO: import Orquestador
+from orchestrator.runner import load_pipeline     # NUEVO: import runner
 
 def register_chat_routes(app):
     # Estado global para la última SELECT
@@ -43,6 +46,34 @@ def register_chat_routes(app):
         if not user_input:
             return jsonify({"response": "🤖 Por favor, ingresa un comando."})
 
+        # NUEVO: detectar comando !run para pipelines declarativos
+        if user_input.startswith("!run "):
+            parts = user_input.split()
+            # !run <pipeline> key1=val1 key2=val2
+            pipeline_name = parts[1]
+            args = {}
+            for token in parts[2:]:
+                if "=" in token:
+                    k, v = token.split("=", 1)
+                    # intentar parsear JSON para valores complejos
+                    try:
+                        args[k] = yaml.safe_load(v)
+                    except Exception:
+                        args[k] = v.strip('"').strip("'")
+            # Carga y valida el YAML del pipeline
+            try:
+                with open(f"orchestrator/example_pipelines/{pipeline_name}.yaml") as f:
+                    cfg = PipelineConfig.model_validate(yaml.safe_load(f))
+            except FileNotFoundError:
+                return jsonify({"response": f"❌ Pipeline '{pipeline_name}' no encontrado."})
+            # Ejecuta el pipeline
+            runner = load_pipeline(cfg)
+            result = runner(**args)
+            return jsonify({
+                "response": f"✅ Pipeline `{pipeline_name}` ejecutado.",
+                "data": result
+            })
+
         # Lógica unificada SQL vs LLM
         result = chat_svc.handle_message(user_input, g.user_id)
 
@@ -54,7 +85,7 @@ def register_chat_routes(app):
             app.last_query_columns = cols
 
             return jsonify({
-                "response": result["response"],
+                "response": result.get("response", ""),
                 "columns": cols
             })
 

@@ -1852,3 +1852,17 @@ sql: |
   ALTER TABLE pruebaxl99 ADD COLUMN NUEVACOLUMNA TEXT;
 ```
 
+```yaml
+table: boligrafo
+date: 2025-05-03
+time: 17:07:08.199
+user: t7AI
+action: CREATE
+sql: |
+  CREATE TABLE IF NOT EXISTS boligrafo (
+    id INTEGER PRIMARY KEY,
+    tipo TEXT,
+    nombre TEXT
+  );
+```
+
