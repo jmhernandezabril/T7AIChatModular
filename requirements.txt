@@ -12,3 +12,5 @@ langchain-community
 langchain-core
 langchain-chains
 python-dotenv
+pytest
+numpy

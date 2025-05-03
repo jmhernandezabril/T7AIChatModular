@@ -27,6 +27,8 @@ BASE_DATOS_DOC_PATH = DOCS_FOLDER + "AZ_base_datos.md"
 FAISS_INDEX_PATH = "vector_memory/index_faiss"
 DB_PATH = "data/t7ai.db"
 
+DB_ENGINE = os.getenv("DB_ENGINE", "sqlite")  # otros valores: "postgresql", "mysql"
+
 # Comandos a detectar/documentar en chat_routes.py
 DDL_COMMANDS = (
     # DDL básicos

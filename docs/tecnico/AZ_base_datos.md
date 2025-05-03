@@ -1348,3 +1348,507 @@ sql: |
   );
 ```
 
+```yaml
+table: pruebam
+date: 2025-05-03
+time: 09:43:06.431
+user: t7AI
+action: CREATE
+sql: |
+  CREATE TABLE IF NOT EXISTS pruebam (
+    id INTEGER,
+    nombre TEXT
+  );
+```
+
+```yaml
+table: x
+date: 2025-05-03
+time: 10:05:26.233
+user: user1
+action: CREATE
+sql: |
+  CREATE TABLE X(
+    id INT
+  )
+```
+
+```yaml
+table: instrucciones
+date: 2025-05-03
+time: 10:27:24.922
+user: u3
+action: CREATE
+sql: |
+  CREATE TABLE IF NOT EXISTS instrucciones (
+    mensaje TEXT NOT NULL
+  );
+```
+
+```yaml
+table: instrucciones
+date: 2025-05-03
+time: 12:40:21.135
+user: u3
+action: CREATE
+sql: |
+  CREATE TABLE IF NOT EXISTS instrucciones (
+    mensaje TEXT NOT NULL
+  );
+```
+
+```yaml
+table: instrucciones
+date: 2025-05-03
+time: 12:48:14.977
+user: u3
+action: CREATE
+sql: |
+  CREATE TABLE IF NOT EXISTS instrucciones (
+    mensaje TEXT NOT NULL
+  );
+```
+
+```yaml
+table: instrucciones
+date: 2025-05-03
+time: 12:53:22.426
+user: u3
+action: CREATE
+sql: |
+  CREATE TABLE IF NOT EXISTS instrucciones (
+    mensaje TEXT NOT NULL
+  );
+```
+
+```yaml
+table: instrucciones
+date: 2025-05-03
+time: 12:53:53.262
+user: t7AI
+action: CREATE
+sql: |
+  CREATE TABLE IF NOT EXISTS instrucciones (
+    mensaje TEXT NOT NULL
+  );
+```
+
+```yaml
+table: instrucciones
+date: 2025-05-03
+time: 12:59:59.367
+user: u3
+action: CREATE
+sql: |
+  CREATE TABLE IF NOT EXISTS instrucciones (
+    mensaje TEXT NOT NULL
+  );
+```
+
+```yaml
+table: instrucciones
+date: 2025-05-03
+time: 13:48:01.928
+user: u3
+action: CREATE
+sql: |
+  CREATE TABLE IF NOT EXISTS instrucciones (
+    mensaje TEXT NOT NULL
+  );
+```
+
+```yaml
+table: instrucciones
+date: 2025-05-03
+time: 14:01:14.978
+user: u3
+action: CREATE
+sql: |
+  CREATE TABLE IF NOT EXISTS instrucciones (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    texto TEXT NOT NULL
+  );
+```
+
+```yaml
+table: instrucciones
+date: 2025-05-03
+time: 14:03:09.863
+user: u3
+action: CREATE
+sql: |
+  CREATE TABLE IF NOT EXISTS instrucciones (
+    mensaje TEXT NOT NULL
+  );
+```
+
+```yaml
+table: instrucciones
+date: 2025-05-03
+time: 14:05:21.842
+user: u3
+action: CREATE
+sql: |
+  CREATE TABLE IF NOT EXISTS instrucciones (
+    mensaje TEXT NOT NULL
+  );
+```
+
+```yaml
+table: instrucciones
+date: 2025-05-03
+time: 14:07:44.137
+user: u3
+action: CREATE
+sql: |
+  CREATE TABLE IF NOT EXISTS instrucciones (
+    mensaje TEXT NOT NULL
+  );
+```
+
+```yaml
+table: instrucciones
+date: 2025-05-03
+time: 14:11:07.649
+user: u3
+action: CREATE
+sql: |
+  CREATE TABLE IF NOT EXISTS instrucciones (
+    mensaje TEXT NOT NULL
+  );
+```
+
+```yaml
+table: instrucciones
+date: 2025-05-03
+time: 14:12:50.069
+user: u3
+action: CREATE
+sql: |
+  CREATE TABLE IF NOT EXISTS instrucciones (
+    mensaje TEXT NOT NULL
+  );
+```
+
+```yaml
+table: instrucciones
+date: 2025-05-03
+time: 14:15:42.768
+user: u3
+action: CREATE
+sql: |
+  CREATE TABLE IF NOT EXISTS instrucciones (
+    mensaje TEXT NOT NULL
+  );
+```
+
+```yaml
+table: instrucciones
+date: 2025-05-03
+time: 14:17:20.656
+user: u3
+action: CREATE
+sql: |
+  CREATE TABLE IF NOT EXISTS instrucciones (
+    mensaje TEXT NOT NULL
+  );
+```
+
+```yaml
+table: instrucciones
+date: 2025-05-03
+time: 14:20:03.104
+user: u3
+action: CREATE
+sql: |
+  CREATE TABLE IF NOT EXISTS instrucciones (
+    mensaje TEXT NOT NULL
+  );
+```
+
+```yaml
+table: instrucciones
+date: 2025-05-03
+time: 14:21:36.121
+user: u3
+action: CREATE
+sql: |
+  CREATE TABLE IF NOT EXISTS instrucciones (
+    mensaje TEXT NOT NULL
+  );
+```
+
+```yaml
+table: instrucciones
+date: 2025-05-03
+time: 14:25:24.522
+user: u3
+action: CREATE
+sql: |
+  CREATE TABLE IF NOT EXISTS instrucciones (
+    mensaje TEXT NOT NULL
+  );
+```
+
+```yaml
+table: instrucciones
+date: 2025-05-03
+time: 14:27:44.953
+user: u3
+action: CREATE
+sql: |
+  CREATE TABLE IF NOT EXISTS instrucciones (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    texto TEXT NOT NULL
+  );
+```
+
+```yaml
+table: instrucciones
+date: 2025-05-03
+time: 14:32:56.803
+user: t7AI
+action: CREATE
+sql: |
+  CREATE TABLE IF NOT EXISTS instrucciones (
+    mensaje TEXT NOT NULL
+  );
+```
+
+```yaml
+table: instrucciones
+date: 2025-05-03
+time: 14:36:12.171
+user: u3
+action: CREATE
+sql: |
+  CREATE TABLE IF NOT EXISTS instrucciones (
+    mensaje TEXT NOT NULL
+  );
+```
+
+```yaml
+table: instrucciones
+date: 2025-05-03
+time: 14:39:31.210
+user: u3
+action: CREATE
+sql: |
+  CREATE TABLE IF NOT EXISTS instrucciones (
+    mensaje TEXT NOT NULL
+  );
+```
+
+```yaml
+table: estoy_aqui
+date: 2025-05-03
+time: 14:49:50.798
+user: t7AI
+action: CREATE
+sql: |
+  CREATE TABLE IF NOT EXISTS estoy_aqui (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    nombre TEXT NOT NULL
+  );
+```
+
+```yaml
+table: instrucciones
+date: 2025-05-03
+time: 14:49:58.323
+user: t7AI
+action: CREATE
+sql: |
+  CREATE TABLE IF NOT EXISTS instrucciones (
+    mensaje TEXT NOT NULL
+  );
+```
+
+```yaml
+table: instrucciones
+date: 2025-05-03
+time: 14:55:42.888
+user: t7AI
+action: CREATE
+sql: |
+  CREATE TABLE IF NOT EXISTS instrucciones (
+    mensaje TEXT NOT NULL
+  );
+```
+
+```yaml
+table: instrucciones
+date: 2025-05-03
+time: 14:56:44.583
+user: t7AI
+action: DROP
+sql: |
+  DROP TABLE INSTRUCCIONES
+```
+
+```yaml
+table: instrucciones
+date: 2025-05-03
+time: 14:56:56.183
+user: t7AI
+action: CREATE
+sql: |
+  CREATE TABLE IF NOT EXISTS instrucciones (
+    mensaje TEXT NOT NULL
+  );
+```
+
+```yaml
+table: instrucciones
+date: 2025-05-03
+time: 15:06:32.254
+user: t7AI
+action: CREATE
+sql: |
+  CREATE TABLE IF NOT EXISTS instrucciones (
+    saludo TEXT NOT NULL
+  );
+```
+
+```yaml
+table: pruebax
+date: 2025-05-03
+time: 15:21:53.135
+user: t7AI
+action: CREATE
+sql: |
+  CREATE TABLE IF NOT EXISTS pruebaX (
+    id INTEGER PRIMARY KEY,
+    nombre TEXT
+  );
+```
+
+```yaml
+table: pruebax
+date: 2025-05-03
+time: 15:22:02.458
+user: t7AI
+action: CREATE
+sql: |
+  CREATE TABLE IF NOT EXISTS pruebaX (
+    id INTEGER PRIMARY KEY,
+    nombr TEXT
+  );
+```
+
+```yaml
+table: pruebax
+date: 2025-05-03
+time: 15:22:23.467
+user: t7AI
+action: CREATE
+sql: |
+  CREATE TABLE IF NOT EXISTS pruebaX (
+    id INTEGER PRIMARY KEY,
+    nombre TEXT
+  );
+```
+
+```yaml
+table: pruebax
+date: 2025-05-03
+time: 15:24:41.570
+user: t7AI
+action: CREATE
+sql: |
+  CREATE TABLE IF NOT EXISTS pruebaX (
+    id INTEGER,
+    nombre TEXT
+  );
+```
+
+```yaml
+table: prueba11
+date: 2025-05-03
+time: 15:37:59.728
+user: t7AI
+action: CREATE
+sql: |
+  CREATE TABLE IF NOT EXISTS prueba11 (
+    id INTEGER PRIMARY KEY,
+    descripcion TEXT
+  );
+```
+
+```yaml
+table: pruebaxl
+date: 2025-05-03
+time: 15:41:45.992
+user: t7AI
+action: CREATE
+sql: |
+  CREATE TABLE IF NOT EXISTS pruebaXL (
+    id INTEGER PRIMARY KEY,
+    nombre TEXT,
+    ampliacion TEXT
+  );
+```
+
+```yaml
+table: pruebaxl
+date: 2025-05-03
+time: 15:42:56.446
+user: t7AI
+action: CREATE
+sql: |
+  CREATE TABLE IF NOT EXISTS pruebaXL (
+    id INTEGER PRIMARY KEY,
+    nombre TEXT,
+    ampliacion TEXT
+  );
+```
+
+```yaml
+table: pruebaxl
+date: 2025-05-03
+time: 15:48:55.539
+user: t7AI
+action: CREATE
+sql: |
+  CREATE TABLE IF NOT EXISTS pruebaxl (
+    id INTEGER,
+    nombre TEXT
+  );
+```
+
+```yaml
+table: pruebaxl
+date: 2025-05-03
+time: 15:50:56.661
+user: t7AI
+action: CREATE
+sql: |
+  CREATE TABLE IF NOT EXISTS pruebaxl (
+    id INTEGER,
+    nombre TEXT
+  );
+```
+
+```yaml
+table: pruebaxl99
+date: 2025-05-03
+time: 15:54:56.207
+user: t7AI
+action: CREATE
+sql: |
+  CREATE TABLE IF NOT EXISTS pruebaxl99 (
+    id INTEGER,
+    descripción TEXT
+  );
+```
+
+```yaml
+table: pruebaxl99
+date: 2025-05-03
+time: 15:58:18.954
+user: t7AI
+action: ALTER
+sql: |
+  ALTER TABLE pruebaxl99 ADD COLUMN NUEVACOLUMNA TEXT;
+```
+

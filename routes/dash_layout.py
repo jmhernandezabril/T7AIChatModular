@@ -1,43 +1,22 @@
-# routes/dash_layout.py
-
 from dash import html, dcc, dash_table
-import plotly.express as px
 
-def get_layout(df_data):
-    # gráficos
-    if df_data.empty:
-        fig = px.scatter(df_data, title="No hay datos disponibles")
-    else:
-        fig = px.scatter(df_data,
-                         x=df_data.columns[0],
-                         y=df_data.columns[1],
-                         title="Gráfico dinámico")
-
+def get_layout():
     return html.Div([
-        html.H1('Panel Avanzado', style={'textAlign': 'center', 'fontFamily': 'Arial'}),
 
-        # **AQUÍ** ponemos el Pre con id
-        html.Div([
-            html.H3("Datos cargados en df_data:"),
-            html.Pre(id='df-data-display',   # <- importante
-                     children="",           # <- inicialmente vacío
-                     style={
-                        'whiteSpace': 'pre-wrap',
-                        'wordBreak': 'break-word',
-                        'fontFamily': 'Arial'
-                     })
-        ], style={'paddingBottom': '20px'}),
+        html.H1('Panel Avanzado',
+                style={'textAlign': 'center', 'fontFamily': 'Arial'}),
 
+        # ─── Controles ──────────────────────────────────────────────
         html.Div([
             dcc.Dropdown(id='x-axis', placeholder='Seleccionar eje X'),
             dcc.Dropdown(id='y-axis', placeholder='Seleccionar eje Y'),
             dcc.Dropdown(
                 id='chart-type',
                 options=[
-                    {'label': 'Bar', 'value': 'bar'},
-                    {'label': 'Line', 'value': 'line'},
+                    {'label': 'Bar',     'value': 'bar'},
+                    {'label': 'Line',    'value': 'line'},
                     {'label': 'Scatter', 'value': 'scatter'},
-                    {'label': 'Pie', 'value': 'pie'}
+                    {'label': 'Pie',     'value': 'pie'}
                 ],
                 value='bar'
             )
@@ -48,33 +27,30 @@ def get_layout(df_data):
             'paddingBottom': '20px'
         }),
 
-        dcc.Graph(id='graph', figure=fig),
+        # ─── Gráfico ───────────────────────────────────────────────
+        dcc.Graph(id='graph', figure={}),
 
+        # ─── Tabla ─────────────────────────────────────────────────
         dash_table.DataTable(
             id='table',
+            columns=[],
+            data=[],
             style_table={'overflowX': 'auto'},
             style_cell={'fontFamily': 'Arial'}
         ),
 
         html.Br(),
 
-        html.A(
-            html.Button('📂 Exportar a Excel', style={
-                'backgroundColor': '#007bff',
-                'color': 'white'
-            }),
-            href='/download_excel',
-            style={
-                'textDecoration': 'none',
-                'display': 'block',
-                'textAlign': 'center'
-            }
-        ),
+        # ─── Botón “Ver datos en JSON” ─────────────────────────────
+        html.Button('Ver datos en JSON', id='show-data-button',
+                    n_clicks=0,
+                    style={'backgroundColor': '#28a745', 'color': 'white'}),
+        html.Div(id='output-data',
+                 style={'whiteSpace': 'pre-wrap', 'fontFamily': 'Arial',
+                        'marginBottom':'20px'}),
 
-        html.Button('Ver datos en JSON', id='show-data-button', style={
-            'backgroundColor': '#28a745',
-            'color': 'white'
-        }),
-
-        html.Div(id='output-data')
+        # ─── Botón “Exportar a Excel” ─────────────────────────────
+        html.Button('Exportar a Excel', id='btn-export-excel', n_clicks=0,
+                    style={'backgroundColor': '#007bff', 'color': 'white'}),
+        dcc.Download(id='download-excel'),
     ])

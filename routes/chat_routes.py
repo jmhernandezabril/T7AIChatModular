@@ -1,17 +1,25 @@
+# routes/chat_routes.py
+
 from flask import (
     render_template, request, jsonify,
     send_file, g, session
 )
-import config
 import pandas as pd
 from io import BytesIO
-import json
 
-from modules.sql_executor import ejecutar_sql_manual, ejecutar_consulta_select
-from modules.llm_manager import procesar_peticion_llm
+from services.chat_service import ChatService  # asegúrate de que este path es correcto
+import config
 
 def register_chat_routes(app):
-    app.last_query_df = pd.DataFrame()
+    # Estado global para la última SELECT
+    app.last_query_df = None
+    app.last_query_columns = []
+
+    # Servicio que mezcla SQL + LLM
+    chat_svc = ChatService(
+        ddl_cmds=config.DDL_COMMANDS,
+        dml_cmds=config.DML_COMMANDS
+    )
 
     @app.before_request
     def load_user():
@@ -31,58 +39,24 @@ def register_chat_routes(app):
 
     @app.route("/chat", methods=["POST"])
     def chat():
-        user_id = g.user_id
         user_input = request.json.get("message", "").strip()
-
         if not user_input:
             return jsonify({"response": "🤖 Por favor, ingresa un comando."})
 
-        first = user_input.split()[0].upper()
-        ddl_cmds = config.DDL_COMMANDS
-        dml_cmds = config.DML_COMMANDS
-        query_cmds = ("SELECT",)
+        # Lógica unificada SQL vs LLM
+        result = chat_svc.handle_message(user_input, g.user_id)
 
-        # 🧠 CASO 1: Instrucción en lenguaje natural → LLM → CREATE TABLE
-        if first not in ddl_cmds + dml_cmds + query_cmds:
-            respuesta = procesar_peticion_llm(user_input, user_id)
-            return jsonify({"response": respuesta})
+        # Si es SELECT, guardamos DataFrame y columnas
+        if "dataframe" in result:
+            df   = result["dataframe"]
+            cols = result["columns"]
+            app.last_query_df      = df
+            app.last_query_columns = cols
 
-        # 🧠 CASO 2: SQL Manual DDL
-        if first in ddl_cmds:
-            resultado = ejecutar_sql_manual(user_input, user_id)
-            return jsonify({"response": resultado.get("error") or resultado.get("success")})
-
-        # 🧠 CASO 3: SELECT
-        if first in query_cmds:
-            resultado = ejecutar_consulta_select(user_input)
-            if "error" in resultado:
-                return jsonify({"response": resultado["error"]})
-            app.last_query_df = resultado["dataframe"]
             return jsonify({
-                "response": resultado["response"],
-                "columns": resultado["columns"]
+                "response": result["response"],
+                "columns": cols
             })
 
-        # 🧠 CASO 4: SQL Manual DML
-        if first in dml_cmds:
-            resultado = ejecutar_sql_manual(user_input, user_id)
-            return jsonify({"response": resultado.get("error") or resultado.get("success")})
-
-        return jsonify({"response": f"🤖 {user_input}"})
-
-
-    @app.route("/download_excel")
-    def download_excel():
-        df = getattr(app, "last_query_df", pd.DataFrame())
-        if df.empty:
-            return "No hay datos para exportar", 400
-
-        output = BytesIO()
-        df.to_excel(output, index=False)
-        output.seek(0)
-        return send_file(
-            output,
-            mimetype="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-            as_attachment=True,
-            download_name="datos.xlsx"
-        )
+        # DDL/DML o LLM → solo devolvemos texto
+        return jsonify({"response": result.get("response", "")})

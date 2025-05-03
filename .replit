@@ -3,7 +3,7 @@ modules = ["python-3.11"]
 
 [nix]
 channel = "stable-24_05"
-packages = ["bash", "glibcLocales", "global-platform-pro", "pgadmin4"]
+packages = ["bash", "glibcLocales", "global-platform-pro", "mailutils", "pgadmin4"]
 
 [unitTest]
 language = "python3"

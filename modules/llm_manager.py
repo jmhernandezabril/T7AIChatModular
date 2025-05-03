@@ -1,73 +1,89 @@
-import json
+# modules/llm_manager.py
+import traceback
+import re
 import config
-from modules.db_manager import execute_sql
-from langchain_core.prompts import PromptTemplate
+from modules.db_manager import execute_sql, create_table_if_not_exists
+from langchain.prompts import PromptTemplate
+from langchain.chat_models import ChatOpenAI
 from langchain.chains import LLMChain
-from langchain_community.chat_models import ChatOpenAI
 
+# Instancia del LLM
 llm = ChatOpenAI(
     openai_api_key=config.OPENAI_API_KEY,
     model_name=config.AI_MODEL,
     temperature=config.AI_TEMPERATURE
 )
 
-create_table_prompt = PromptTemplate(
+# Prompt unificado
+UNIFIED_PROMPT = PromptTemplate(
     input_variables=["user_input"],
     template="""
-Eres un asistente que convierte instrucciones en JSON.
-Recibe esta instrucción en lenguaje Cnatural y devuelve exclusivamente un JSON válido sin ningún texto adicional.
+Eres un asistente experto en bases de datos y conversación.
 
-La estructura del JSON debe ser exactamente:
-{{
-  "table": "nombre_tabla",
-  "columns": [
-    {{"name": "nombre_columna", "type": "tipo_sql"}}
-  ]
-}}
+1) Si el usuario pide crear, alterar o eliminar una tabla (en inglés o en español),
+   responde con la instrucción SQL únicamente, en texto plano, terminado en punto y coma.
+   No uses backticks, ni ```sql, ni explicaciones.
 
-Ejemplo válido:
-{{
-  "table": "usuarios",
-  "columns": [
-    {{"name": "id", "type": "INTEGER PRIMARY KEY AUTOINCREMENT"}},
-    {{"name": "nombre", "type": "TEXT NOT NULL"}}
-  ]
-}}
+2) Para cualquier otro mensaje (saludos, small-talk, preguntas generales),
+   responde en lenguaje natural en español, sin generar SQL.
 
-Ahora genera el JSON para este input:
+Ejemplos:
+- crea una tabla usuarios con columnas id y nombre
+  → CREATE TABLE IF NOT EXISTS usuarios (id INTEGER PRIMARY KEY, nombre TEXT);
+
+- ¿Hola, cómo estás?
+  → ¡Hola! Estoy muy bien, gracias. ¿En qué puedo ayudarte hoy?
+
+Petición de usuario:
 {user_input}
-Recuerda: SOLO el JSON. Nada más.
 """
 )
 
-create_table_chain = LLMChain(llm=llm, prompt=create_table_prompt)
+unified_chain = LLMChain(llm=llm, prompt=UNIFIED_PROMPT)
 
-def procesar_peticion_llm(user_input, usuario):
-    invoke_resp = create_table_chain.invoke({"user_input": user_input})
-    json_str = invoke_resp.get("text", str(invoke_resp)).strip()
+def procesar_peticion_llm(user_input: str, usuario: str) -> str:
+    """
+    Distingue entre DDL (CREATE, DROP, ALTER, etc.) y small-talk;
+    ejecuta SQL y maneja errores y existencia de tabla.
+    """
+    # 1) Llamada al LLM
+    try:
+        respuesta = unified_chain.run(user_input).strip()
+    except Exception as e:
+        traceback.print_exc()
+        return f"❌ Error de comunicación con LLM: {e}"
 
-    if json_str.startswith("```json"):
-        json_str = json_str.replace("```json", "").replace("```", "").strip()
+    # 2) Limpia backticks/fences
+    cleaned = re.sub(r"```(?:sql)?", "", respuesta).replace("```", "").strip()
+    upper = cleaned.upper()
 
-    spec = json.loads(json_str)
-    table = spec.get("table", "").strip()
-    columns = spec.get("columns", [])
+    # 3) Detectar DDL (inglés/español)
+    sql_verbs = ("CREATE ", "DROP ", "ALTER ", "TRUNCATE ")
+    sql_verbs_es = ("CREA ", "CREAR ", "ELIMINAR ", "MODIFICAR ", "RENAME ", "GRANT ", "REVOKE ")
 
-    if not table or not isinstance(columns, list):
-        raise ValueError("❌ JSON inválido recibido del LLM")
+    if any(upper.startswith(v) for v in (*sql_verbs, *sql_verbs_es)):
+        # CREATE TABLE IF NOT EXISTS
+        match = re.match(
+            r"CREATE\s+TABLE\s+IF\s+NOT\s+EXISTS\s+([a-zA-Z0-9_]+)",
+            cleaned, flags=re.IGNORECASE
+        )
+        if match:
+            tabla = match.group(1)
+            result = create_table_if_not_exists(cleaned, tabla, usuario)
+        else:
+            # Otros DDL se ejecutan directamente
+            try:
+                result = execute_sql(cleaned, usuario)
+            except Exception as e:
+                traceback.print_exc()
+                return f"❌ Excepción al ejecutar SQL: {e}"
 
-    if any("name" not in c or "type" not in c for c in columns):
-        raise ValueError("❌ Formato de columnas inválido.")
+        msg = result.get("message", "").strip()
+        success = result.get("success", False)
 
-    if table.upper() in config.RESERVED_SQL_WORDS:
-        table = f"{table.lower()}_tabla"
+        if success and not msg.lower().startswith("la tabla"):
+            return f"⚡ Instrucción ejecutada correctamente: {cleaned}"
+        return f"⚠️ {msg}"
 
-    sql = f"CREATE TABLE IF NOT EXISTS {table} (" + ", ".join(
-        f"{col['name']} {col['type']}" for col in columns
-    ) + ");"
-
-    res = execute_sql(sql, usuario=usuario)
-    if not res.get("success", True):
-        raise Exception(res['message'])
-
-    return f"⚡ Tabla creada: {table}"
+    # 4) Small-talk
+    return cleaned
