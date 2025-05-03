@@ -1251,3 +1251,83 @@ sql: |
   );
 ```
 
+```yaml
+table: clientes
+date: 2025-05-03
+time: 06:44:07.308
+user: t7AI
+action: DROP
+sql: |
+  DROP TABLE clientes
+```
+
+```yaml
+table: clientes
+date: 2025-05-03
+time: 06:44:24.374
+user: t7AI
+action: CREATE
+sql: |
+  CREATE TABLE IF NOT EXISTS clientes (
+    nombre TEXT
+  );
+```
+
+```yaml
+table: clientes
+date: 2025-05-03
+time: 06:52:38.438
+user: t7AI
+action: DROP
+sql: |
+  DROP TABLE CLIENTES
+```
+
+```yaml
+table: clientes
+date: 2025-05-03
+time: 06:52:53.183
+user: t7AI
+action: CREATE
+sql: |
+  CREATE TABLE IF NOT EXISTS clientes (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    nombre TEXT NOT NULL
+  );
+```
+
+```yaml
+table: clientes
+date: 2025-05-03
+time: 06:54:51.870
+user: t7AI
+action: DROP
+sql: |
+  DROP TABLE CLIENTES
+```
+
+```yaml
+table: clientes
+date: 2025-05-03
+time: 06:54:59.936
+user: t7AI
+action: CREATE
+sql: |
+  CREATE TABLE IF NOT EXISTS clientes (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    nombre TEXT NOT NULL
+  );
+```
+
+```yaml
+table: a
+date: 2025-05-03
+time: 07:03:56.482
+user: t7AI
+action: CREATE
+sql: |
+  CREATE TABLE IF NOT EXISTS a (
+    id INTEGER PRIMARY KEY AUTOINCREMENT
+  );
+```
+
