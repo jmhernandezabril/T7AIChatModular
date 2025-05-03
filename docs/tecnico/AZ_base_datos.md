@@ -1331,3 +1331,20 @@ sql: |
   );
 ```
 
+```yaml
+table: obras
+date: 2025-05-03
+time: 07:44:29.762
+user: t7AI
+action: CREATE
+sql: |
+  CREATE TABLE obras (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    descripcion TEXT,
+    direccion TEXT,
+    fecha_inicio TEXT,
+    cliente_id INTEGER,
+    FOREIGN KEY (cliente_id) REFERENCES clientes(id)
+  );
+```
+

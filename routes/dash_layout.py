@@ -71,7 +71,7 @@ def get_layout(df_data):
             }
         ),
 
-        html.Button('Ver datos en el chat', id='show-data-button', style={
+        html.Button('Ver datos en JSON', id='show-data-button', style={
             'backgroundColor': '#28a745',
             'color': 'white'
         }),
